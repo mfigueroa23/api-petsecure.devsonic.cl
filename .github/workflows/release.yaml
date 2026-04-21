@@ -20,6 +20,9 @@ jobs:
       - name: "Installing project dependencies"
         run: npm i
 
+      - name: "Generating Prisma Client"
+        run: npx prisma generate
+
       - name: "Creating dist"
         run: npm run build
 
@@ -47,6 +50,9 @@ jobs:
         with:
           name: dist
           path: ./dist
+
+      - name: "Setting ENV file"
+        run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
 
       - name: "Login into DockerHub"
         uses: docker/login-action@v3
